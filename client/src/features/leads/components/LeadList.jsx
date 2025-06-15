@@ -17,7 +17,9 @@ import {
   Menu,
   MenuItem,
   Divider,
-  Fab
+  Fab,
+  ToggleButton,
+  ToggleButtonGroup
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -26,11 +28,14 @@ import {
   MoreVert as MoreVertIcon,
   Assignment as AssignmentIcon,
   Label as LabelIcon,
-  Delete as DeleteIcon
+  Delete as DeleteIcon,
+  TableChart as TableIcon,
+  ViewColumn as ViewColumnIcon
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import LeadTable from './LeadTable';
 import LeadFilters from './LeadFilters';
+import LeadPipeline from './LeadPipeline';
 import { useLeads, useLeadMutations } from '../hooks';
 
 const LeadList = () => {
@@ -42,6 +47,7 @@ const LeadList = () => {
   const [bulkActionsAnchor, setBulkActionsAnchor] = useState(null);
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState('desc');
+  const [viewMode, setViewMode] = useState('table'); // 'table' | 'pipeline'
 
   // Hooks
   const {
@@ -182,11 +188,24 @@ const LeadList = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 3 }}>
       {/* Header */}
-      <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
         <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
           Leads
         </Typography>
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+          <ToggleButtonGroup
+            value={viewMode}
+            exclusive
+            onChange={(e, newMode) => newMode && setViewMode(newMode)}
+            size="small"
+          >
+            <ToggleButton value="table">
+              <TableIcon sx={{ mr: 1 }} /> Table
+            </ToggleButton>
+            <ToggleButton value="pipeline">
+              <ViewColumnIcon sx={{ mr: 1 }} /> Pipeline
+            </ToggleButton>
+          </ToggleButtonGroup>
           <Button
             variant="outlined"
             startIcon={<UploadIcon />}
@@ -226,68 +245,75 @@ const LeadList = () => {
         users={[]} // TODO: Get users list
       />
 
-      {/* Bulk Actions */}
-      {selectedLeads.length > 0 && (
-        <Paper sx={{ p: 2, mb: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="body1">
-            {selectedLeads.length} lead{selectedLeads.length > 1 ? 's' : ''} selected
-          </Typography>
-          <Box>
-            <Button
-              variant="outlined"
-              onClick={(e) => setBulkActionsAnchor(e.currentTarget)}
-              endIcon={<MoreVertIcon />}
-            >
-              Bulk Actions
-            </Button>
-            <Menu
-              anchorEl={bulkActionsAnchor}
-              open={Boolean(bulkActionsAnchor)}
-              onClose={() => setBulkActionsAnchor(null)}
-            >
-              <MenuItem onClick={handleBulkAssign}>
-                <AssignmentIcon sx={{ mr: 1 }} /> Assign To
-              </MenuItem>
-              <MenuItem onClick={handleBulkStatusChange}>
-                <LabelIcon sx={{ mr: 1 }} /> Change Status
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={handleBulkDelete} sx={{ color: 'error.main' }}>
-                <DeleteIcon sx={{ mr: 1 }} /> Delete
-              </MenuItem>
-            </Menu>
-          </Box>
-        </Paper>
-      )}
+      {/* Conditionally render Table or Pipeline view */}
+      {viewMode === 'table' ? (
+        <>
+          {/* Bulk Actions */}
+          {selectedLeads.length > 0 && (
+            <Paper sx={{ p: 2, mb: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Typography variant="body1">
+                {selectedLeads.length} lead{selectedLeads.length > 1 ? 's' : ''} selected
+              </Typography>
+              <Box>
+                <Button
+                  variant="outlined"
+                  onClick={(e) => setBulkActionsAnchor(e.currentTarget)}
+                  endIcon={<MoreVertIcon />}
+                >
+                  Bulk Actions
+                </Button>
+                <Menu
+                  anchorEl={bulkActionsAnchor}
+                  open={Boolean(bulkActionsAnchor)}
+                  onClose={() => setBulkActionsAnchor(null)}
+                >
+                  <MenuItem onClick={handleBulkAssign}>
+                    <AssignmentIcon sx={{ mr: 1 }} /> Assign To
+                  </MenuItem>
+                  <MenuItem onClick={handleBulkStatusChange}>
+                    <LabelIcon sx={{ mr: 1 }} /> Change Status
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={handleBulkDelete} sx={{ color: 'error.main' }}>
+                    <DeleteIcon sx={{ mr: 1 }} /> Delete
+                  </MenuItem>
+                </Menu>
+              </Box>
+            </Paper>
+          )}
 
-      {/* Error Alert */}
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {error}
-        </Alert>
-      )}
+          {/* Error Alert */}
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
 
-      {/* Leads Table */}
-      <LeadTable
-        leads={leads}
-        loading={loading || mutationLoading}
-        selectedLeads={selectedLeads}
-        onSelectLead={handleSelectLead}
-        onSelectAll={handleSelectAll}
-        onSort={handleSort}
-        sortBy={sortBy}
-        sortOrder={sortOrder}
-        page={pagination.page - 1} // MUI uses 0-based index
-        rowsPerPage={pagination.limit}
-        totalCount={pagination.total}
-        onPageChange={handlePageChange}
-        onRowsPerPageChange={handleRowsPerPageChange}
-        onViewLead={handleViewLead}
-        onEditLead={handleEditLead}
-        onDeleteLead={handleDeleteClick}
-        onEmailLead={handleEmailLead}
-        onCallLead={handleCallLead}
-      />
+          {/* Leads Table */}
+          <LeadTable
+            leads={leads}
+            loading={loading || mutationLoading}
+            selectedLeads={selectedLeads}
+            onSelectLead={handleSelectLead}
+            onSelectAll={handleSelectAll}
+            onSort={handleSort}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            page={pagination.page - 1} // MUI uses 0-based index
+            rowsPerPage={pagination.limit}
+            totalCount={pagination.total}
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleRowsPerPageChange}
+            onViewLead={handleViewLead}
+            onEditLead={handleEditLead}
+            onDeleteLead={handleDeleteClick}
+            onEmailLead={handleEmailLead}
+            onCallLead={handleCallLead}
+          />
+        </>
+      ) : (
+        <LeadPipeline filters={filters} />
+      )}
 
       {/* Delete Confirmation Dialog */}
       <Dialog
