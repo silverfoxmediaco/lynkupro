@@ -1,12 +1,17 @@
 // client/src/features/leads/services/leadService.js
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 class LeadService {
   // Get auth token from localStorage
   getAuthHeader() {
     const token = localStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
+  // Check if user is authenticated
+  isAuthenticated() {
+    return !!localStorage.getItem('token');
   }
 
   // Get all leads with filters
