@@ -12,14 +12,7 @@ import Integrations from './pages/Integrations'
 import Resources from './pages/Resources'
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#013BDB',
-    },
-    secondary: {
-      main: '#261FB3',
-    },
-  },
+  
   typography: {
     fontFamily: 'Poppins, sans-serif',
     h1: {
@@ -29,7 +22,7 @@ const theme = createTheme({
     h2: {
       fontFamily: 'Poppins, sans-serif',
       fontWeight: 700,
-      color: 'yellow !important',
+      
     },
     h3: {
       fontFamily: 'Poppins, sans-serif',

@@ -1,0 +1,146 @@
+/* client/src/styles/WhyChooseLynkupro.css */
+
+.why-choose-section {
+    padding: 100px 0;
+    background: white;
+    width: 100vw;
+  }
+  
+  .why-choose-title {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: #013BDB !important;
+    margin-bottom: 2rem !important;
+    font-family: 'Poppins', sans-serif !important;
+  }
+  
+  /* Image Container */
+  .why-choose-image-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Card animations */
+  .why-choose-card {
+    border-radius: 16px !important;
+    transform: rotate(-5deg);
+    transition: all 0.3s ease !important;
+    animation: float 4s infinite ease-in-out;
+  }
+  
+  .why-choose-card-1 {
+    animation-delay: 0s;
+  }
+  
+  .why-choose-card-2 {
+    transform: rotate(3deg) !important;
+    animation-delay: 1s;
+  }
+  
+  .why-choose-card-3 {
+    transform: rotate(-2deg) !important;
+    animation-delay: 2s;
+  }
+  
+  .why-choose-card:hover {
+    transform: translateY(-10px) rotate(0deg) !important;
+    z-index: 10 !important;
+    cursor: pointer;
+  }
+  
+  @keyframes float {
+    0%, 100% { 
+      transform: translateY(0) rotate(var(--rotation, -5deg)); 
+    }
+    50% { 
+      transform: translateY(-10px) rotate(var(--rotation, -5deg)); 
+    }
+  }
+  
+  /* Benefits List */
+  .why-choose-benefits-list {
+    margin-bottom: 2rem;
+  }
+  
+  .why-choose-benefit-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    color: #2D2D2D;
+  }
+  
+  .why-choose-benefit-item:hover {
+    background: #f8f9fa;
+    transform: translateX(10px);
+  }
+  
+  .why-choose-check-icon {
+    color: #4CAF50 !important;
+    margin-right: 16px !important;
+    font-size: 24px !important;
+    flex-shrink: 0;
+  }
+  
+  /* CTA Button */
+  .why-choose-cta-button {
+    background: #F0F015 !important;
+    color: #013BDB !important;
+    padding: 14px 32px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    border-radius: 50px !important;
+    font-family: 'Poppins', sans-serif !important;
+    box-shadow: 0 4px 20px rgba(240, 240, 21, 0.3) !important;
+    transition: all 0.3s ease !important;
+    margin-top: 32px !important;
+  }
+  
+  .why-choose-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(240, 240, 21, 0.5) !important;
+    background: #FFD700 !important;
+  }
+  
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .why-choose-section {
+      padding: 60px 20px;
+    }
+    
+    .why-choose-title {
+      font-size: 1.8rem !important;
+      margin-bottom: 1.5rem !important;
+      text-align: center;
+    }
+    
+    .why-choose-image-container {
+      height: 300px;
+      margin-bottom: 40px;
+    }
+    
+    .why-choose-card {
+      width: 200px !important;
+      height: 140px !important;
+    }
+    
+    .why-choose-card svg {
+      font-size: 36px !important;
+    }
+    
+    .why-choose-card h6 {
+      font-size: 0.9rem !important;
+    }
+    
+    .why-choose-benefit-item {
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+  }

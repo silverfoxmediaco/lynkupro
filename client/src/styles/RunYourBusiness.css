@@ -1,0 +1,102 @@
+/* client/src/styles/RunYourBusiness.css */
+
+.run-your-business-section {
+    padding: 100px 0;
+    background: #f8f9fa;
+    width: 100vw;
+  }
+  
+  .run-your-business-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  
+  .run-your-business-title {
+    font-size: 3rem !important;
+    font-weight: 700 !important;
+    color: #013BDB !important;
+    margin-bottom: 3rem !important;
+    line-height: 1.3 !important;
+    text-align: center;
+    font-family: 'Poppins', sans-serif !important;
+  }
+  
+  .run-your-business-gradient {
+    background: linear-gradient(135deg, #F0F015 0%, #FFD700 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    display: inline-block;
+    font-weight: 800 !important;
+  }
+  
+  /* Feature Cards */
+  .run-your-business-card {
+    height: 100%;
+    text-align: center;
+    border: none !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.3s ease !important;
+    background: white !important;
+  }
+  
+  .run-your-business-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  .run-your-business-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+  }
+  
+  .run-your-business-icon-yellow {
+    background-color: #F0F015 !important;
+  }
+  
+  .run-your-business-icon-blue {
+    background-color: #013BDB !important;
+  }
+  
+  .run-your-business-feature-title {
+    font-weight: 600 !important;
+    color: #2D2D2D !important;
+    margin-bottom: 12px !important;
+    font-family: 'Poppins', sans-serif !important;
+  }
+  
+  .run-your-business-feature-description {
+    color: #666 !important;
+    line-height: 1.6 !important;
+    font-family: 'Poppins', sans-serif !important;
+  }
+  
+  /* Fallback for browsers that don't support background-clip */
+  @supports not (-webkit-background-clip: text) {
+    .run-your-business-gradient {
+      color: #F0F015 !important;
+    }
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .run-your-business-section {
+      padding: 60px 20px;
+    }
+    
+    .run-your-business-title {
+      font-size: 2rem !important;
+    }
+    
+    .run-your-business-header {
+      margin-bottom: 40px;
+    }
+  }
