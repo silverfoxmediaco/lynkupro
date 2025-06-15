@@ -1,110 +1,63 @@
-// client/src/features/leads/hooks/useLeads.js
+// client/src/features/leads/hooks/useLead.js
 
 import { useState, useEffect, useCallback } from 'react';
 import leadService from '../services/leadService';
 
-export const useLeads = (initialFilters = {}) => {
-  const [leads, setLeads] = useState([]);
+export const useLead = (leadId) => {
+  const [lead, setLead] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filters, setFilters] = useState(initialFilters);
-  const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 25,
-    total: 0,
-    totalPages: 0
-  });
 
-  // Fetch leads with current filters
-  const fetchLeads = useCallback(async () => {
+  // Fetch single lead
+  const fetchLead = useCallback(async () => {
+    if (!leadId) {
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
       
-      const params = {
-        ...filters,
-        page: pagination.page,
-        limit: pagination.limit
-      };
-      
-      const response = await leadService.getLeads(params);
-      
-      setLeads(response.data || []);
-      
-      // Update pagination if backend provides it
-      if (response.pagination) {
-        setPagination(prev => ({
-          ...prev,
-          total: response.pagination.total,
-          totalPages: response.pagination.totalPages
-        }));
-      }
+      const response = await leadService.getLead(leadId);
+      setLead(response.data);
     } catch (err) {
-      setError(err.message || 'Failed to fetch leads');
-      console.error('Error fetching leads:', err);
+      setError(err.message || 'Failed to fetch lead');
+      console.error('Error fetching lead:', err);
     } finally {
       setLoading(false);
     }
-  }, [filters, pagination.page, pagination.limit]);
+  }, [leadId]);
 
   // Initial fetch
   useEffect(() => {
-    fetchLeads();
-  }, [fetchLeads]);
+    fetchLead();
+  }, [fetchLead]);
 
-  // Update filters
-  const updateFilters = useCallback((newFilters) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
-    setPagination(prev => ({ ...prev, page: 1 })); // Reset to first page
+  // Update lead locally after mutations
+  const updateLeadLocally = useCallback((updatedData) => {
+    setLead(prev => ({ ...prev, ...updatedData }));
   }, []);
 
-  // Clear filters
-  const clearFilters = useCallback(() => {
-    setFilters({});
-    setPagination(prev => ({ ...prev, page: 1 }));
+  // Add note locally
+  const addNoteLocally = useCallback((note) => {
+    setLead(prev => ({
+      ...prev,
+      notes: [...(prev.notes || []), note]
+    }));
   }, []);
 
-  // Change page
-  const changePage = useCallback((newPage) => {
-    setPagination(prev => ({ ...prev, page: newPage }));
-  }, []);
-
-  // Change page size
-  const changePageSize = useCallback((newLimit) => {
-    setPagination(prev => ({ ...prev, limit: newLimit, page: 1 }));
-  }, []);
-
-  // Search leads
-  const searchLeads = useCallback(async (searchTerm) => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const response = await leadService.searchLeads(searchTerm);
-      setLeads(response.data || []);
-    } catch (err) {
-      setError(err.message || 'Search failed');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  // Refresh leads
+  // Refresh lead data
   const refresh = useCallback(() => {
-    fetchLeads();
-  }, [fetchLeads]);
+    fetchLead();
+  }, [fetchLead]);
 
   return {
-    leads,
+    lead,
     loading,
     error,
-    filters,
-    pagination,
-    updateFilters,
-    clearFilters,
-    changePage,
-    changePageSize,
-    searchLeads,
-    refresh
+    refresh,
+    updateLeadLocally,
+    addNoteLocally
   };
 };
