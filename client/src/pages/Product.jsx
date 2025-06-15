@@ -1,9 +1,13 @@
+// client/src/pages/Product.jsx
+
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Container, Typography, Grid, Card, CardContent, Box, Button, List, ListItem, ListItemIcon, ListItemText, Tabs, Tab } from '@mui/material'
 import { Check, Dashboard, People, CalendarToday, Description, Assessment, Build, Email, CloudUpload } from '@mui/icons-material'
 import '../styles/Product.css'
 
 function Product() {
+  const navigate = useNavigate()
   const [tabValue, setTabValue] = React.useState(0)
 
   const handleTabChange = (event, newValue) => {
@@ -13,7 +17,7 @@ function Product() {
   const features = {
     0: [
       { icon: <Dashboard />, title: 'Intuitive Dashboard', description: 'Get a complete overview of your projects, leads, and team performance' },
-      { icon: <People />, title: 'Lead Management', description: 'Track and manage leads through your sales pipeline' },
+      { icon: <People />, title: 'Lead Management', description: 'Track and manage leads through your sales pipeline', link: '/leads' },
       { icon: <CalendarToday />, title: 'Calendar Integration', description: 'Sync with Google Calendar and Outlook for seamless scheduling' },
       { icon: <Description />, title: 'Document Management', description: 'Store and organize all project documents in one place' }
     ],
@@ -106,7 +110,21 @@ function Product() {
         <Grid container spacing={3} sx={{ mt: 2 }}>
           {features[tabValue].map((feature, index) => (
             <Grid item xs={12} sm={6} key={index}>
-              <Card sx={{ height: '100%', display: 'flex', alignItems: 'center', p: 2 }}>
+              <Card 
+                sx={{ 
+                  height: '100%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  p: 2,
+                  cursor: feature.link ? 'pointer' : 'default',
+                  transition: 'all 0.3s ease',
+                  '&:hover': feature.link ? {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)'
+                  } : {}
+                }}
+                onClick={() => feature.link && navigate(feature.link)}
+              >
                 <Box sx={{ 
                   mr: 2, 
                   backgroundColor: '#F0F015', 

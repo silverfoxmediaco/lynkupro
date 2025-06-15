@@ -1,3 +1,5 @@
+// client/src/App.jsx
+
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
@@ -10,6 +12,7 @@ import Support from './pages/Support'
 import Product from './pages/Product'
 import Integrations from './pages/Integrations'
 import Resources from './pages/Resources'
+import LeadsPage from './features/leads/LeadsPage'
 
 const theme = createTheme({
   
@@ -66,6 +69,7 @@ function App() {
             <Route path="/product" element={<Product />} />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/leads/*" element={<LeadsPage />} />
           </Routes>
         </main>
         <Footer />
