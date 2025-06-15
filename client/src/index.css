@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* client/src/index.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 * {
   margin: 0;
@@ -6,41 +8,57 @@
   box-sizing: border-box;
 }
 
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   color: #2D2D2D;
   background-color: #FFFFFF;
+  margin: 0;
+  padding: 0;
 }
 
+/* App container should be full width */
+#root, .App {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Remove global h1 and h2 styles - let components handle their own styling */
+/* If you need default styles for other pages, make them less aggressive */
 h1 {
-  font-size: 80px !important;
-  color: #013BDB !important;
-  font-weight: 800 !important;
+  font-size: 3rem;
+  font-weight: 800;
   margin-bottom: 1rem;
+  /* No color forcing - let components decide */
 }
 
 h2 {
-  font-size: 40px !important;
-  color: #013BDB !important;
-  font-weight: 600 !important;
+  font-size: 2rem;
+  font-weight: 600;
   margin-bottom: 1rem;
+  /* No color forcing - let components decide */
 }
 
 main {
+  width: 100%;
   min-height: calc(100vh - 200px);
 }
 
 @media screen and (max-width: 768px) {
   h1 {
-    font-size: 40px !important;
+    font-size: 2rem;
   }
   
   h2 {
-    font-size: 32px !important;
+    font-size: 1.5rem;
   }
   
+  /* Remove main padding on mobile to ensure full width */
   main {
-    padding: 20px;
+    padding: 0;
   }
-  
 }
