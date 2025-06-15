@@ -4,16 +4,18 @@ import React from 'react';
 import {
   Box,
   Typography,
+  Paper,
+  Chip
+} from '@mui/material';
+import {
   Timeline,
   TimelineItem,
   TimelineSeparator,
   TimelineDot,
   TimelineConnector,
   TimelineContent,
-  TimelineOppositeContent,
-  Paper,
-  Chip
-} from '@mui/material';
+  TimelineOppositeContent
+} from '@mui/lab';
 import {
   PersonAdd as PersonAddIcon,
   Label as LabelIcon,
