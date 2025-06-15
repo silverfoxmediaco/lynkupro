@@ -65,7 +65,8 @@ const LeadsPage = () => {
           flexGrow: 1,
           minHeight: '100vh',
           backgroundColor: '#f5f5f5',
-          position: 'relative'
+          position: 'relative',
+          animation: 'fadeIn 0.3s ease-in'
         }}
       >
         {/* Routes */}
@@ -109,22 +110,6 @@ const LeadsPage = () => {
           </Drawer>
         )}
       </Box>
-
-      {/* Global Styles for Leads Module */}
-      <style jsx global>{`
-        .leads-page {
-          animation: fadeIn 0.3s ease-in;
-        }
-        
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-      `}</style>
     </Box>
   );
 };
